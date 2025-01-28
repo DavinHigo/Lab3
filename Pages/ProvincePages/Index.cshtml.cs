@@ -19,11 +19,13 @@ namespace Lab3.Pages_ProvincePages
             _context = context;
         }
 
-        public IList<Province> Province { get;set; } = default!;
+        public IList<Province> Province { get; set; } = default!;
 
         public async Task OnGetAsync()
         {
-            Province = await _context.Provinces.ToListAsync();
+            Province = await _context.Provinces
+                .Include(p => p.Cities)
+                .ToListAsync();
         }
     }
 }

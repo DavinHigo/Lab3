@@ -19,6 +19,11 @@ namespace Lab3.Data
         {
             base.OnModelCreating(modelBuilder);
 
+            modelBuilder.Entity<Province>()
+                .HasMany(p => p.Cities)
+                .WithOne(c => c.Province)
+                .HasForeignKey(c => c.ProvinceCode);
+
             modelBuilder.Entity<Province>().HasData(
                 new Province { ProvinceCode = "ON", ProvinceName = "Ontario" },
                 new Province { ProvinceCode = "QC", ProvinceName = "Quebec" },
@@ -26,9 +31,9 @@ namespace Lab3.Data
             );
 
             modelBuilder.Entity<City>().HasData(
-                new City { CityId = 1, CityName = "Toronto", Population = 2731571, Province = "ON" },
-                new City { CityId = 2, CityName = "Montreal", Population = 1704694, Province = "QC" },
-                new City { CityId = 3, CityName = "Vancouver", Population = 631486, Province = "BC" }
+                new City { CityId = 1, CityName = "Toronto", Population = 2731571, ProvinceCode = "ON" },
+                new City { CityId = 2, CityName = "Montreal", Population = 1704694, ProvinceCode = "QC" },
+                new City { CityId = 3, CityName = "Vancouver", Population = 631486, ProvinceCode = "BC" }
             );
         }
     }
